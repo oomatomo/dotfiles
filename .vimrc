@@ -42,13 +42,18 @@ NeoBundle "Shougo/neosnippet"
 "Color
 NeoBundle "tomasr/molokai"
 
+"
 NeoBundle "mattn/zencoding-vim"
 NeoBundle 'thinca/vim-quickrun'
-
+"
 NeoBundle 'Source-Explorer-srcexpl.vim'
 NeoBundle 'trinity.vim'
 NeoBundle 'The-NERD-tree'
 NeoBundle 'taglist.vim'
+
+"git
+NeoBundle 'https://github.com/tpope/vim-fugitive.git'
+NeoBundle 'https://github.com/gregsexton/gitv.git'
 
 filetype plugin indent on
 
@@ -84,7 +89,7 @@ if has('conceal')
 	set conceallevel=2 concealcursor=i
 endif
 " Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets,~/.vim/snippets'
+let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 "------------------------------------------------------------
 "molokai
@@ -133,6 +138,16 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_Exit_OnlyWindow = 1
+
+"------------------------------------------------------------
+"vim-fugitive 
+"------------------------------------------------------------
+set statusline+=%{fugitive#statusline()}
+
+"------------------------------------------------------------
+"NERDTreeToggle 
+"------------------------------------------------------------
+nmap <F9> :NERDTreeToggle
 "------------------------------------------------------------
 "文字コード
 "------------------------------------------------------------
