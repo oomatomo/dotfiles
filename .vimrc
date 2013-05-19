@@ -40,7 +40,12 @@ NeoBundle "Shougo/unite.vim"
 NeoBundle "Shougo/neocomplcache"
 NeoBundle "Shougo/neosnippet"
 "Color
-NeoBundle "tomasr/molokai"
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'https://github.com/tpope/vim-vividchalk.git'
+NeoBundle 'https://github.com/Lokaltog/vim-distinguished.git'
+NeoBundle 'https://github.com/nanotech/jellybeans.vim.git'
+NeoBundle 'https://github.com/vim-scripts/candy.vim.git'
+NeoBundle 'https://github.com/dandorman/vim-colors.git'
 
 "
 NeoBundle "mattn/zencoding-vim"
@@ -95,9 +100,7 @@ let g:neosnippet#snippets_directory='~/.vim/snippets'
 "molokai
 "------------------------------------------------------------
 syntax on
-let g:molokai_original = 1
 set t_Co=256
-colorscheme molokai
 
 "------------------------------------------------------------
 "Zencoding <C-y> and [,] 
@@ -148,6 +151,49 @@ set statusline+=%{fugitive#statusline()}
 "NERDTreeToggle 
 "------------------------------------------------------------
 nmap <F9> :NERDTreeToggle
+
+"------------------------------------------------------------
+"ColorRoller
+"------------------------------------------------------------
+let ColorRoller = {}
+let ColorRoller.colors = [
+      \ 'molokai',
+      \ 'vividchalk',
+      \ 'distinguished',
+      \ 'jellybeans',
+      \ 'Mustang',
+      \ 'Zenburn',
+      \ 'Wombat',
+      \ 'Tomorrow',
+      \ 'github',
+      \ 'grb256',
+      \ 'ir_black',
+      \ 'railscasts',
+      \ 'twilight',
+      \ ]
+
+function! ColorRoller.change()
+  let color = get(self.colors, 0)
+  silent exe "colorscheme " . color
+  redraw
+  echo self.colors
+endfunction
+
+function! ColorRoller.roll()
+  let item = remove(self.colors, 0)
+  call insert(self.colors, item, len(self.colors))
+  call self.change()
+endfunction
+
+function! ColorRoller.unroll()
+  let item = remove(self.colors, -1)
+  call insert(self.colors, item, 0)
+  call self.change()
+endfunction
+
+nnoremap <silent><S-C>   :<C-u>call ColorRoller.roll()<CR>
+nnoremap <silent><S-F9> :<C-u>call ColorRoller.unroll()<CR>
+
 "------------------------------------------------------------
 "文字コード
 "------------------------------------------------------------
