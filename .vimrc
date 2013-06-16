@@ -2,8 +2,12 @@
 set number
 "if tab clicked is white space 4
 set tabstop=4
-"
+set shiftwidth=4
+set expandtab
+"コマンド補完
 set wildmenu
+"括弧の対応の表示
+set showmatch
 
 "------------------------------------------------------------
 "
@@ -35,30 +39,47 @@ if has('vim_starting')
 endif	  
  
 "file manager
-NeoBundle "Shougo/unite.vim"
+NeoBundle "https://github.com/Shougo/unite.vim.git"
 "Code suport
-NeoBundle "Shougo/neocomplcache"
-NeoBundle "Shougo/neosnippet"
+NeoBundle 'https://github.com/Shougo/neocomplcache.vim.git' 
+NeoBundle 'https://github.com/Shougo/neosnippet.vim.git' 
 "Color
-NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'https://github.com/altercation/vim-colors-solarized.git'
 NeoBundle 'https://github.com/tpope/vim-vividchalk.git'
 NeoBundle 'https://github.com/Lokaltog/vim-distinguished.git'
 NeoBundle 'https://github.com/nanotech/jellybeans.vim.git'
 NeoBundle 'https://github.com/vim-scripts/candy.vim.git'
 NeoBundle 'https://github.com/dandorman/vim-colors.git'
+NeoBundle 'https://github.com/jpo/vim-railscasts-theme.git'
 
-"
-NeoBundle "mattn/zencoding-vim"
-NeoBundle 'thinca/vim-quickrun'
-"
-NeoBundle 'Source-Explorer-srcexpl.vim'
-NeoBundle 'trinity.vim'
-NeoBundle 'The-NERD-tree'
-NeoBundle 'taglist.vim'
+"zencoding
+NeoBundle 'https://github.com/mattn/zencoding-vim.git' 
+"quickrun
+NeoBundle 'https://github.com/thinca/vim-quickrun.git'
+"file
+NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
+NeoBundle 'https://github.com/wesleyche/Trinity.git'
+NeoBundle 'https://github.com/vim-scripts/taglist.vim.git'
+"file
+NeoBundle 'https://github.com/scrooloose/nerdtree.git'
+
+"html , js syntack
+"javascript auto indent
+NeoBundle 'https://github.com/pangloss/vim-javascript'
+"syntastic make command
+NeoBundle 'https://github.com/scrooloose/syntastic.git'
+"syntastic
+NeoBundle 'https://github.com/jelera/vim-javascript-syntax.git'
+"補完
+NeoBundle 'https://github.com/teramako/jscomplete-vim.git'
 
 "git
+"
 NeoBundle 'https://github.com/tpope/vim-fugitive.git'
 NeoBundle 'https://github.com/gregsexton/gitv.git'
+
+"browser
+NeoBundle 'https://github.com/tyru/open-browser.vim.git'
 
 filetype plugin indent on
 
@@ -101,6 +122,7 @@ let g:neosnippet#snippets_directory='~/.vim/snippets'
 "------------------------------------------------------------
 syntax on
 set t_Co=256
+color molokai 
 
 "------------------------------------------------------------
 "Zencoding <C-y> and [,] 
@@ -143,6 +165,11 @@ let Tlist_Use_Right_Window = 1
 let Tlist_Exit_OnlyWindow = 1
 
 "------------------------------------------------------------
+"Srcexpl
+"------------------------------------------------------------
+let g:SrcExpl_UpdateTags = 1
+
+"------------------------------------------------------------
 "vim-fugitive 
 "------------------------------------------------------------
 set statusline+=%{fugitive#statusline()}
@@ -151,6 +178,50 @@ set statusline+=%{fugitive#statusline()}
 "NERDTreeToggle 
 "------------------------------------------------------------
 nmap <F9> :NERDTreeToggle
+
+"------------------------------------------------------------
+"syntastic
+"------------------------------------------------------------
+
+" syntastic
+ let g:syntastic_mode_map = { 'mode': 'active',
+   \ 'active_filetypes': [], 
+   \ 'passive_filetypes': ['html', 'javascript'] }
+   let g:syntastic_javascript_checker = 'gjslint'
+
+"------------------------------------------------------------
+"open browser
+"------------------------------------------------------------
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
+
+"------------------------------------------------------------
+"javascript
+"------------------------------------------------------------
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
+
+
+"------------------------------------------------------------
+"gjslint
+"------------------------------------------------------------
+autocmd FileType javascript :compiler gjslint
+autocmd QuickfixCmdPost make copen
+
+"------------------------------------------------------------
+"jscomplete-vim
+"------------------------------------------------------------
+autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
+autocmd FileType html setlocal omnifunc=jscomplete#CompleteJS
+let g:jscomplete_use = ['dom', 'moz', 'es6th']
+
+"------------------------------------------------------------
+"vim-javascript-syntax
+"------------------------------------------------------------
+au FileType javascript call JavaScriptFold()
+au FileType html call JavaScriptFold()
 
 "------------------------------------------------------------
 "ColorRoller
@@ -194,9 +265,23 @@ endfunction
 nnoremap <silent><S-C>   :<C-u>call ColorRoller.roll()<CR>
 nnoremap <silent><S-F9> :<C-u>call ColorRoller.unroll()<CR>
 
+
 "------------------------------------------------------------
 "文字コード
 "------------------------------------------------------------
+
+"---------------------------------------------------------------------------
+" 日本語対応のための設定:
+"---------------------------------------------------------------------------
+" 文字コードの自動認識
+" from http://www.kawaz.jp/pukiwiki/?vim#cb691f26
+if !(has('win32'))
+	set termencoding=utf-8
+	set encoding=utf-8
+	set fileencoding=utf-8
+	set fileencodings=utf-8,cp932
+endif
+
 if &encoding !=# 'utf-8'
   set encoding=japan
   set fileencoding=japan
@@ -204,17 +289,28 @@ endif
 if has('iconv')
   let s:enc_euc = 'euc-jp'
   let s:enc_jis = 'iso-2022-jp'
+  " iconvがeucJP-msに対応しているかをチェック
   if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
     let s:enc_euc = 'eucjp-ms'
     let s:enc_jis = 'iso-2022-jp-3'
+  " iconvがJISX0213に対応しているかをチェック
   elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
     let s:enc_euc = 'euc-jisx0213'
     let s:enc_jis = 'iso-2022-jp-3'
   endif
+  " fileencodingsを構築
   if &encoding ==# 'utf-8'
     let s:fileencodings_default = &fileencodings
-    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-    let &fileencodings = &fileencodings .','. s:fileencodings_default
+
+    " from http://d.hatena.ne.jp/heavenshell/20080105/1199536148
+    if !(has('win32'))
+      let &fileencodings = s:enc_jis .','. s:enc_euc
+      let &fileencodings = &fileencodings .','. s:fileencodings_default
+    else
+      let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+      let &fileencodings = &fileencodings .','. s:fileencodings_default
+    endif
+
     unlet s:fileencodings_default
   else
     let &fileencodings = &fileencodings .','. s:enc_jis
@@ -230,17 +326,59 @@ if has('iconv')
       let &fileencodings = &fileencodings .','. s:enc_euc
     endif
   endif
+  " 定数を処分
   unlet s:enc_euc
   unlet s:enc_jis
 endif
+" 日本語を含まない場合は fileencoding に encoding を使うようにする
 if has('autocmd')
-  function! AU_ReCheck_FENC()
+  func! AU_ReCheck_FENC()
     if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
       let &fileencoding=&encoding
     endif
-  endfunction
+  endf
   autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
+" 改行コードの自動認識
+set fileformats=unix,dos,mac
+" □とか○の文字があってもカーソル位置がずれないようにする
+if exists('&ambiwidth')
+  set ambiwidth=double
+endif
 
+
+" メッセージを日本語にする (Windowsでは自動的に判断・設定されている)
+if !(has('win32') || has('mac')) && has('multi_lang')
+  if !exists('$LANG') || $LANG.'X' ==# 'X'
+    if !exists('$LC_CTYPE') || $LC_CTYPE.'X' ==# 'X'
+      language ctype ja_JP.eucJP
+    endif
+    if !exists('$LC_MESSAGES') || $LC_MESSAGES.'X' ==# 'X'
+      language messages ja_JP.eucJP
+    endif
+  endif
+endif
+
+" for utf8
+set encoding=utf-8
+set fileencodings=iso-2022-jp,cp932,euc-jp,utf-8,ucs-2le,ucs-2
+
+" ファイルを開くとき、改行コードを指定。
+set ff=unix
+
+" ステータスラインに改行コードと文字コードを表示
+set laststatus=2
+set statusline=%y%{GetStatusEx()}\ 0x%B(%b)%F%m%r%=<%c:%l>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 改行コードと文字コードを取得
+func! GetStatusEx()
+let str = ''
+let str = str . '' . &fileformat . ']'
+if has('multi_byte') && &fileencoding != ''
+let str = '[' . &fileencoding . ':' . str
+endif
+return str
+endf
 
 
