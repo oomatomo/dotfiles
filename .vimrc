@@ -9,6 +9,12 @@ set wildmenu
 "括弧の対応の表示
 set showmatch
 
+"カーソル強制
+nnoremap <Left> :echoe "行かせねーよ"<CR>
+nnoremap <Right> :echoe "いつから右に行けると思った？"<CR>
+nnoremap <Up> :echoe "お前は一生下だ"<CR>
+nnoremap <Down> :echoe "おいおいどこへいく？"<CR>
+
 "------------------------------------------------------------
 "
 "------------------------------------------------------------
@@ -73,13 +79,22 @@ NeoBundle 'https://github.com/jelera/vim-javascript-syntax.git'
 "補完
 NeoBundle 'https://github.com/teramako/jscomplete-vim.git'
 
+"code align
+NeoBundle 'https://github.com/vim-scripts/Align.git'
 "git
-"
 NeoBundle 'https://github.com/tpope/vim-fugitive.git'
 NeoBundle 'https://github.com/gregsexton/gitv.git'
 
 "browser
 NeoBundle 'https://github.com/tyru/open-browser.vim.git'
+
+"font
+NeoBundle 'https://github.com/vim-scripts/fontzoom.vim.git'
+
+"powerline
+NeoBundle 'https://github.com/Lokaltog/vim-powerline.git'
+"NeoBundle 'https://github.com/Lokaltog/powerline.git', { 'rtp' : 'powerline/bindings/vim'}
+NeoBundle 'https://github.com/taichouchou2/alpaca_powertabline.git'
 
 filetype plugin indent on
 
@@ -172,12 +187,12 @@ let g:SrcExpl_UpdateTags = 1
 "------------------------------------------------------------
 "vim-fugitive 
 "------------------------------------------------------------
-set statusline+=%{fugitive#statusline()}
+"statuslinenにbranch 表示
 
 "------------------------------------------------------------
 "NERDTreeToggle 
 "------------------------------------------------------------
-nmap <F9> :NERDTreeToggle
+nmap <silent> nd :NERDTreeToggle<Enter>
 
 "------------------------------------------------------------
 "syntastic
@@ -222,6 +237,19 @@ let g:jscomplete_use = ['dom', 'moz', 'es6th']
 "------------------------------------------------------------
 au FileType javascript call JavaScriptFold()
 au FileType html call JavaScriptFold()
+
+"------------------------------------------------------------
+"vim-javascript-syntax
+"------------------------------------------------------------
+vnoremap <silent> => :Align @1 =><CR>
+vnoremap <silent> = :Align @1 =<CR>
+vnoremap <silent> == =
+
+"------------------------------------------------------------
+"powerline
+"------------------------------------------------------------
+set laststatus=2
+set rtp+=~/.vim/neobundle/powerline/powerline/bindings/vim
 
 "------------------------------------------------------------
 "ColorRoller
@@ -270,9 +298,9 @@ nnoremap <silent><S-F9> :<C-u>call ColorRoller.unroll()<CR>
 "文字コード
 "------------------------------------------------------------
 
-"---------------------------------------------------------------------------
+"------------------------------------------------------------
 " 日本語対応のための設定:
-"---------------------------------------------------------------------------
+"------------------------------------------------------------
 " 文字コードの自動認識
 " from http://www.kawaz.jp/pukiwiki/?vim#cb691f26
 if !(has('win32'))
@@ -366,19 +394,37 @@ set fileencodings=iso-2022-jp,cp932,euc-jp,utf-8,ucs-2le,ucs-2
 " ファイルを開くとき、改行コードを指定。
 set ff=unix
 
-" ステータスラインに改行コードと文字コードを表示
-set laststatus=2
-set statusline=%y%{GetStatusEx()}\ 0x%B(%b)%F%m%r%=<%c:%l>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 改行コードと文字コードを取得
 func! GetStatusEx()
 let str = ''
-let str = str . '' . &fileformat . ']'
+let str = str . '' . &fileformat . ''
 if has('multi_byte') && &fileencoding != ''
-let str = '[' . &fileencoding . ':' . str
+let str = '' . &fileencoding . '' . str . ''
 endif
 return str
 endf
+
+
+"------------------------------------------------------------
+"vim statusline
+"------------------------------------------------------------
+"set laststatus=2
+"
+"set statusline+=%F    " バッファ内のファイルのフルパス
+"set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
+"set statusline+=%1l   " 何行目にカーソルがあるか
+"set statusline+=- 
+"set statusline+=%L    " バッファ内の総行数
+"set statusline+=,
+"set statusline+=%c   " 何列目にカーソルがあるか
+"set statusline+=--
+"set statusline+=%V    " 画面上の何列目にカーソルがあるか
+"set statusline+=%P    " ファイル内の何％の位置にあるか
+"
+"set statusline+=%{fugitive#statusline()} " Gitのブランチ名を表示
+"set statusline+=%y%{GetStatusEx()} " ステータスラインに改行コードと文字コードを表示
+"
+"set statusline+=\ \ 
+"
 
 
