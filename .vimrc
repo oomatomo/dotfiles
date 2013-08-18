@@ -1,8 +1,8 @@
 "row number
 set number
 "if tab clicked is white space 4
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 "コマンド補完
 set wildmenu
@@ -15,6 +15,9 @@ nnoremap <Right> :echoe "いつから右に行けると思った？"<CR>
 nnoremap <Up> :echoe "お前は一生下だ"<CR>
 nnoremap <Down> :echoe "おいおいどこへいく？"<CR>
 
+"Tab、行末の半角スペースを明示的に表示する。
+set list
+set listchars=tab:^\ ,trail:~
 "------------------------------------------------------------
 "
 "------------------------------------------------------------
@@ -29,10 +32,7 @@ inoremap <> <><LEFT>
 "Escの2回押しでハイライト消去
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
 
-"全角スペースを視覚化
-highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
-au BufNewFile,BufRead * match ZenkakuSpace /　/
-
+nmap <Nul> i<Space><ESC>
 
 "------------------------------------------------------------
 "NeoBundle
@@ -40,15 +40,15 @@ au BufNewFile,BufRead * match ZenkakuSpace /　/
 set nocompatible
 filetype off
 if has('vim_starting')
-	     set runtimepath+=~/.vim/neobundle
-	  call neobundle#rc(expand('~/.vim/bundle'))
-endif	  
- 
+    set runtimepath+=~/.vim/neobundle
+    call neobundle#rc(expand('~/.vim/bundle'))
+endif
+
 "file manager
 NeoBundle "https://github.com/Shougo/unite.vim.git"
 "Code suport
-NeoBundle 'https://github.com/Shougo/neocomplcache.vim.git' 
-NeoBundle 'https://github.com/Shougo/neosnippet.vim.git' 
+NeoBundle 'https://github.com/Shougo/neocomplcache.vim.git'
+NeoBundle 'https://github.com/Shougo/neosnippet.vim.git'
 "Color
 NeoBundle 'https://github.com/altercation/vim-colors-solarized.git'
 NeoBundle 'https://github.com/tpope/vim-vividchalk.git'
@@ -59,7 +59,7 @@ NeoBundle 'https://github.com/dandorman/vim-colors.git'
 NeoBundle 'https://github.com/jpo/vim-railscasts-theme.git'
 
 "zencoding
-NeoBundle 'https://github.com/mattn/zencoding-vim.git' 
+NeoBundle 'https://github.com/mattn/zencoding-vim.git'
 "quickrun
 NeoBundle 'https://github.com/thinca/vim-quickrun.git'
 "file
@@ -93,8 +93,21 @@ NeoBundle 'https://github.com/vim-scripts/fontzoom.vim.git'
 
 "powerline
 NeoBundle 'https://github.com/Lokaltog/vim-powerline.git'
-"NeoBundle 'https://github.com/Lokaltog/powerline.git', { 'rtp' : 'powerline/bindings/vim'}
+NeoBundle 'https://github.com/Lokaltog/powerline.git', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'https://github.com/taichouchou2/alpaca_powertabline.git'
+
+"Unite thema
+NeoBundle 'https://github.com/osyo-manga/vim-powerline-unite-theme.git'
+
+"非同期処理
+NeoBundle 'https://github.com/Shougo/vimproc.vim.git', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
 
 filetype plugin indent on
 
@@ -104,7 +117,7 @@ filetype plugin indent on
 let g:neocomplcache_enable_at_startup = 1
 
 let g:neocomplcache_ctags_arguments_list = {
-    \ 'perl' : '-R -h ".pm"'
+    \ 'perl' : '-R -h ".pm"',
     \ }
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
@@ -137,6 +150,7 @@ let g:neosnippet#snippets_directory='~/.vim/snippets'
 "------------------------------------------------------------
 syntax on
 set t_Co=256
+let g:solarized_termtrans=1
 color molokai 
 
 "------------------------------------------------------------
@@ -172,6 +186,10 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 
+"テーマ適用
+let g:Powerline_theme="unite_status"
+let g:Powerline_colorscheme="unite_status"
+
 "------------------------------------------------------------
 "taglist
 "------------------------------------------------------------
@@ -200,7 +218,7 @@ nmap <silent> nd :NERDTreeToggle<Enter>
 
 " syntastic
  let g:syntastic_mode_map = { 'mode': 'active',
-   \ 'active_filetypes': [], 
+   \ 'active_filetypes': [],
    \ 'passive_filetypes': ['html', 'javascript'] }
    let g:syntastic_javascript_checker = 'gjslint'
 
@@ -218,12 +236,11 @@ let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 
-
 "------------------------------------------------------------
 "gjslint
 "------------------------------------------------------------
-autocmd FileType javascript :compiler gjslint
-autocmd QuickfixCmdPost make copen
+"autocmd FileType javascript :compiler gjslint
+"autocmd QuickfixCmdPost make copen
 
 "------------------------------------------------------------
 "jscomplete-vim
@@ -249,7 +266,7 @@ vnoremap <silent> == =
 "powerline
 "------------------------------------------------------------
 set laststatus=2
-set rtp+=~/.vim/neobundle/powerline/powerline/bindings/vim
+let g:Powerline_symbols = 'fancy'
 
 "------------------------------------------------------------
 "ColorRoller
@@ -399,7 +416,7 @@ func! GetStatusEx()
 let str = ''
 let str = str . '' . &fileformat . ''
 if has('multi_byte') && &fileencoding != ''
-let str = '' . &fileencoding . '' . str . ''
+    let str = '' . &fileencoding . '' . str . ''
 endif
 return str
 endf
@@ -426,5 +443,3 @@ endf
 "
 "set statusline+=\ \ 
 "
-
-
