@@ -1,3 +1,6 @@
+"------------------------------------------------------------
+"
+"------------------------------------------------------------
 "row number
 set number
 "if tab clicked is white space 4
@@ -18,21 +21,27 @@ nnoremap <Down> :echoe "おいおいどこへいく？"<CR>
 "Tab、行末の半角スペースを明示的に表示する。
 set list
 set listchars=tab:^\ ,trail:~
-"------------------------------------------------------------
+
 "
-"------------------------------------------------------------
 inoremap <C-d> $
 inoremap <C-a> @
+inoremap <C-s> %
 inoremap {} {}<LEFT>
 inoremap [] []<LEFT>
 inoremap () ()<LEFT>
 inoremap "" ""<LEFT>
 inoremap '' ''<LEFT>
 inoremap <> <><LEFT>
+inoremap %% %%<LEFT>
+
 "Escの2回押しでハイライト消去
 nmap <ESC><ESC> ;nohlsearch<CR><ESC>
-
 nmap <Nul> i<Space><ESC>
+
+"tab
+nmap <C-c> <ESC>:tabnew<CR><ESC>
+nmap <C-n> <ESC>:tabnext<CR><ESC>
+nmap <C-p> <ESC>:tabprevious<CR><ESC>
 
 "------------------------------------------------------------
 "NeoBundle
@@ -91,8 +100,10 @@ NeoBundle 'https://github.com/tyru/open-browser.vim.git'
 "font
 NeoBundle 'https://github.com/vim-scripts/fontzoom.vim.git'
 
+"lightline
+NeoBundle 'https://github.com/itchyny/lightline.vim.git'
+
 "powerline
-NeoBundle 'https://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'https://github.com/Lokaltog/powerline.git', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'https://github.com/taichouchou2/alpaca_powertabline.git'
 
@@ -151,7 +162,7 @@ let g:neosnippet#snippets_directory='~/.vim/snippets'
 syntax on
 set t_Co=256
 let g:solarized_termtrans=1
-color molokai 
+color Zenburn
 
 "------------------------------------------------------------
 "Zencoding <C-y> and [,] 
@@ -267,6 +278,10 @@ vnoremap <silent> == =
 "------------------------------------------------------------
 set laststatus=2
 let g:Powerline_symbols = 'fancy'
+"lightline
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
 
 "------------------------------------------------------------
 "ColorRoller
@@ -321,10 +336,10 @@ nnoremap <silent><S-F9> :<C-u>call ColorRoller.unroll()<CR>
 " 文字コードの自動認識
 " from http://www.kawaz.jp/pukiwiki/?vim#cb691f26
 if !(has('win32'))
-	set termencoding=utf-8
-	set encoding=utf-8
-	set fileencoding=utf-8
-	set fileencodings=utf-8,cp932
+  set termencoding=utf-8
+  set encoding=utf-8
+  set fileencoding=utf-8
+  set fileencodings=utf-8,cp932
 endif
 
 if &encoding !=# 'utf-8'
@@ -443,3 +458,9 @@ endf
 "
 "set statusline+=\ \ 
 "
+
+"------------------------------------------------------------
+" load_or remove chef_dict
+"------------------------------------------------------------
+command ChefDicAdd set dictionary+=~/.vim/dict/opscode_chef.dict/*.dict
+command ChefDicRem set dictionary-=~/.vim/dict/opscode_chef.dict/*.dict
