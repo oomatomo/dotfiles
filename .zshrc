@@ -1,4 +1,16 @@
 
+#-----------------------------------------------------------
+# SetOpt
+#-----------------------------------------------------------
+setopt correct
+setopt re_match_pcre
+setopt prompt_subst
+setopt auto_menu
+PROMPT="[%n] %3F%~%f%1v
+%(?.%{$fg[green]%}.%{$fg[white]%}) %(?.(^o^).(>_<%)) <%{${reset_color}%}"
+PROMPT2='[%n]> '
+SPROMPT="%{$fg[red]%}%{$suggest%}(*_ _)? < %B%r%b %{$fg[red]%}? [!(y), !(n),a,e]:${reset_color} "
+
 # .zshrc
 export SVN_EDITOR='vim'
 # User specific aliases and functions
@@ -39,27 +51,6 @@ precmd() {
 
 # 色設定
 autoload -U colors; colors
-
-#-----------------------------------------------------------
-# SetOpt
-#-----------------------------------------------------------
-
-# もしかして機能
-setopt correct
-# PCRE 互換の正規表現を使う
-setopt re_match_pcre
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-setopt prompt_subst
-# 補完候補が複数あるときに自動的に一覧表示する
-setopt auto_menu
-
-# プロンプト指定
-PROMPT="[%n] %3F%~%f%1v
-%(?.%{$fg[green]%}.%{$fg[white]%})%(?!(*'-') <!(*;-;%)? <)%{${reset_color}%}"
-# プロンプト指定(コマンドの続き)
-PROMPT2='[%n]> '
-# もしかして時のプロンプト指定
-SPROMPT="%{$fg[red]%}%{$suggest%}(*'~'%)? < %B%r%b %{$fg[red]%}ですよね? [そう!(y), 違う!(n),a,e]:${reset_color} "
 
 #
 # for Mac
