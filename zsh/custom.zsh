@@ -25,29 +25,10 @@ alias rmysql='mysql -u root -p'
 alias tmux='tmux -2'
 alias perlv='echo "perl -Mモジュール名 -e print $モジュール名::VERSION"'
 
-export NYTPROF=sigexit=1:file=/tmp/nytprof/nytprof.out
-export DBIC_TRACE=1
-
 if [ -f /etc/zshrc ]; then
     . /etc/zshrc
 fi
 source ~/perl5/perlbrew/etc/bashrc 
-
-# show git branch
-fpath=(~/.zsh $fpath)
-
-autoload -U compinit
-compinit -u
-
-GIT_PS1_SHOWDIRTYSTATE=true
-# show git branch
-# VCS settings
-autoload -Uz vcs_info
-precmd() {
-    psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    psvar[1]=$vcs_info_msg_0_
-}
 
 # 色設定
 autoload -U colors; colors
