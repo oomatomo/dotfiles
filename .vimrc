@@ -43,6 +43,9 @@ nmap <C-c> <ESC>:tabnew<CR><ESC>
 nmap <C-n> <ESC>:tabnext<CR><ESC>
 nmap <C-p> <ESC>:tabprevious<CR><ESC>
 
+"perltudy
+map ,ny <Esc>:%! perltidy -se<CR>
+map ,nyv <Esc>:'<,'>! perltidy -se<CR>
 "------------------------------------------------------------
 "NeoBundle
 "------------------------------------------------------------
