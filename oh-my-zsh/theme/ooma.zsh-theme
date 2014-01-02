@@ -21,10 +21,10 @@ ZSH_THEME_GIT_PROMPT_PREFIX="-[git]:%{$M%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$RE%}"
 
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$RE%}:%{$R%}(-_-)%{$RE%} "
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$RE%}:%{$G%}(^3^)"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$RE%}:%{$G%}(^_^)"
 
-ZSH_THEME_GIT_PROMPT_STAGED_PREFIX="%{$G%}[["
-ZSH_THEME_GIT_PROMPT_STAGED_SUFFIX=" ]]%{$RE%}"
+ZSH_THEME_GIT_PROMPT_STAGED_PREFIX="%{$G%}["
+ZSH_THEME_GIT_PROMPT_STAGED_SUFFIX=" ]%{$RE%}"
 ZSH_THEME_GIT_PROMPT_STAGED_ADDED=" A"
 ZSH_THEME_GIT_PROMPT_STAGED_MODIFIED=" M"
 ZSH_THEME_GIT_PROMPT_STAGED_RENAMED=" R"
@@ -44,42 +44,35 @@ custom_git_prompt_status() {
   # for git version 1.7.1
   INDEX=$(command git status --porcelain 2> /dev/null)
   STATUS=""
-  if $(echo "$INDEX" | grep -E '^\?\? ' &> /dev/null); then
-    COUNT=$(echo "$INDEX" | grep -E '^\?\? ' &> /dev/null | wc -l )
+  if COUNT=$(echo "$INDEX" &> /dev/null | grep -E '^\?\? ' -c ) && [ $COUNT -gt 0 ]; then
     STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_UNTRACKED$COUNT"
   fi
 
   # Staged
   STAGED=""
-  if $(echo "$INDEX" | grep '^A  ' &> /dev/null); then
-    COUNT=$(echo "$INDEX" | grep '^A  ' &> /dev/null | wc -l )
+  if COUNT=$(echo "$INDEX" &> /dev/null | grep '^A  ' -c ) && [ $COUNT -gt 0 ]; then
     STAGED="$STAGED$ZSH_THEME_GIT_PROMPT_STAGED_ADDED$COUNT"
   fi
-  if $(echo "$INDEX" | grep '^M  ' &> /dev/null); then
-    COUNT=$(echo "$INDEX" | grep '^M  ' &> /dev/null | wc -l )
+  if COUNT=$(echo "$INDEX" &> /dev/null | grep '^M  ' -c ) && [ $COUNT -gt 0 ]; then
     STAGED="$STAGED$ZSH_THEME_GIT_PROMPT_STAGED_MODIFIED$COUNT"
   fi
-  if $(echo "$INDEX" | grep '^R  ' &> /dev/null); then
-    COUNT=$(echo "$INDEX" | grep '^R  ' &> /dev/null | wc -l )
+  if COUNT=$(echo "$INDEX" &> /dev/null | grep '^R  ' -c ) && [ $COUNT -gt 0 ]; then
     STAGED="$STAGED$ZSH_THEME_GIT_PROMPT_STAGED_RENAMED$COUNT"
   fi
-  if $(echo "$INDEX" | grep '^D  ' &> /dev/null); then
-    COUNT=$(echo "$INDEX" | grep '^D  ' &> /dev/null | wc -l )
+  if COUNT=$(echo "$INDEX" &> /dev/null | grep '^D  ' -c ) && [ $COUNT -gt 0 ]; then
     STAGED="$STAGED$ZSH_THEME_GIT_PROMPT_STAGED_DELETED$COUNT"
   fi
 
   if [ "$STAGED" != "" ];then
-    STATUS="$ZSH_THEME_GIT_PROMPT_STAGED_PREFIX$STAGED$ZSH_THEME_GIT_PROMPT_STAGED_SUFFIX"
+    STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_STAGED_PREFIX$STAGED$ZSH_THEME_GIT_PROMPT_STAGED_SUFFIX"
   fi
 
   # Unstaged
   UNSTAGED=""
-  if $(echo "$INDEX" | grep '^AM \|^ T \|^ M ' &> /dev/null); then
-    COUNT=$(echo "$INDEX" | grep '^AM \|^ T \|^ M ' &> /dev/null | wc -l )
+  if COUNT=$(echo "$INDEX" &> /dev/null | grep '^AM \|^ T \|^ M ' -c ) && [ $COUNT -gt 0 ]; then
     UNSTAGED="$UNSTAGED$ZSH_THEME_GIT_PROMPT_MODIFIED$COUNT"
   fi
-  if $(echo "$INDEX" | grep '^AD ' &> /dev/null); then
-    COUNT=$(echo "$INDEX" | grep '^AD ' &> /dev/null | wc -l )
+  if COUNT=$(echo "$INDEX" &> /dev/null | grep '^AD ' -c ) && [ $COUNT -gt 0 ]; then
     UNSTAGED="$UNSTAGED$ZSH_THEME_GIT_PROMPT_DELETED$COUNT"
   fi
 
