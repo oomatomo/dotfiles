@@ -23,17 +23,8 @@ alias perlv='echo "perl -Mモジュール名 -e print $モジュール名::VERSI
 # 色設定
 autoload -U colors; colors
 
-#
-# for Mac
-#
-export PATH=/usr/local/bin:$PATH
-# for Ruby 
-export PATH=/usr/local/opt/ruby/bin:$PATH
-# for MySQL
-export PATH=$PATH:/usr/local/mysql/bin
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # for perlbrew
-source ~/perl5/perlbrew/etc/bashrc
+source ~/.perl5/perlbrew/etc/bashrc
 # for rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-fpath=(/usr/local/share/zsh-completions $fpath)
