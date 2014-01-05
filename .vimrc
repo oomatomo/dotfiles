@@ -164,7 +164,6 @@ let g:user_zen_settings = { 'indentation':'    ' }
 "------------------------------------------------------------
 "unite.vim
 "------------------------------------------------------------
-" 入力モードで開始する
 " let g:unite_enable_start_insert=1
 " buffer list
 nnoremap <silent> <Space>fb :<C-u>Unite buffer<CR>
