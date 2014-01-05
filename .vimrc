@@ -1,51 +1,38 @@
-"------------------------------------------------------------
-"
-"------------------------------------------------------------
 "row number
 set number
 "if tab clicked is white space 4
 set tabstop=2
 set shiftwidth=2
 set expandtab
-"コマンド補完
+"Command completion
 set wildmenu
-"括弧の対応の表示
+"Display in parentheses correspond
 set showmatch
+"Cursor Force
+nnoremap <Left> :echoe "Fuck Fuck"<CR>
+nnoremap <Right> :echoe "Oh, Jesus"<CR>
+nnoremap <Up> :echoe "Are you kidding"<CR>
+nnoremap <Down> :echoe "Hey Come Back"<CR>
 
-"カーソル強制
-nnoremap <Left> :echoe "行かせねーよ"<CR>
-nnoremap <Right> :echoe "いつから右に行けると思った？"<CR>
-nnoremap <Up> :echoe "お前は一生下だ"<CR>
-nnoremap <Down> :echoe "おいおいどこへいく？"<CR>
-
-"Tab、行末の半角スペースを明示的に表示する。
+"I want to display explicitly a space and tab at the end of the line.
 set list
 set listchars=tab:^\ ,trail:~
-
+"------------------------------------------------------------
 "
+"------------------------------------------------------------
 inoremap <C-d> $
 inoremap <C-a> @
-inoremap <C-s> %
 inoremap {} {}<LEFT>
 inoremap [] []<LEFT>
 inoremap () ()<LEFT>
 inoremap "" ""<LEFT>
 inoremap '' ''<LEFT>
 inoremap <> <><LEFT>
-inoremap %% %%<LEFT>
 
-"Escの2回押しでハイライト消去
-nmap <ESC><ESC> ;nohlsearch<CR><ESC>
-nmap <Nul> i<Space><ESC>
+" perl tidy
+nnoremap ,pt <Esc>:%! perltidy -se<CR>
+vnoremap ,pt <Esc>:'<,'>! perltidy -se<CR>
 
-"tab
-nmap <C-c> <ESC>:tabnew<CR><ESC>
-nmap <C-n> <ESC>:tabnext<CR><ESC>
-nmap <C-p> <ESC>:tabprevious<CR><ESC>
-
-"perltudy
-map ,ny <Esc>:%! perltidy -se<CR>
-map ,nyv <Esc>:'<,'>! perltidy -se<CR>
 "------------------------------------------------------------
 "NeoBundle
 "------------------------------------------------------------
@@ -61,6 +48,10 @@ NeoBundle "https://github.com/Shougo/unite.vim.git"
 "Code suport
 NeoBundle 'https://github.com/Shougo/neocomplcache.vim.git'
 NeoBundle 'https://github.com/Shougo/neosnippet.vim.git'
+
+"Doc
+NeoBundle 'https://github.com/thinca/vim-ref.git'
+
 "Color
 NeoBundle 'https://github.com/altercation/vim-colors-solarized.git'
 NeoBundle 'https://github.com/tpope/vim-vividchalk.git'
@@ -88,32 +79,27 @@ NeoBundle 'https://github.com/pangloss/vim-javascript'
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 "syntastic
 NeoBundle 'https://github.com/jelera/vim-javascript-syntax.git'
-"補完
+"Completion
 NeoBundle 'https://github.com/teramako/jscomplete-vim.git'
-
 "code align
 NeoBundle 'https://github.com/vim-scripts/Align.git'
 "git
 NeoBundle 'https://github.com/tpope/vim-fugitive.git'
 NeoBundle 'https://github.com/gregsexton/gitv.git'
-
 "browser
 NeoBundle 'https://github.com/tyru/open-browser.vim.git'
-
 "font
 NeoBundle 'https://github.com/vim-scripts/fontzoom.vim.git'
-
 "lightline
 NeoBundle 'https://github.com/itchyny/lightline.vim.git'
-
 "powerline
+"NeoBundle 'https://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'https://github.com/Lokaltog/powerline.git', { 'rtp' : 'powerline/bindings/vim'}
-NeoBundle 'https://github.com/taichouchou2/alpaca_powertabline.git'
+"NeoBundle 'https://github.com/taichouchou2/alpaca_powertabline.git'
 
 "Unite thema
-NeoBundle 'https://github.com/osyo-manga/vim-powerline-unite-theme.git'
+"NeoBundle 'https://github.com/osyo-manga/vim-powerline-unite-theme.git'
 
-"非同期処理
 NeoBundle 'https://github.com/Shougo/vimproc.vim.git', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
@@ -123,7 +109,18 @@ NeoBundle 'https://github.com/Shougo/vimproc.vim.git', {
       \    },
       \ }
 
+" merkdown
+NeoBundle 'https://github.com/plasticboy/vim-markdown.git'
+
 filetype plugin indent on
+
+"------------------------------------------------------------
+"color
+"------------------------------------------------------------
+syntax on
+set t_Co=256
+"let g:solarized_termtrans=1
+color molokai
 
 ""------------------------------------------------------------
 "neocomplcache
@@ -135,8 +132,8 @@ let g:neocomplcache_ctags_arguments_list = {
     \ }
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
-	\ 'default'    : '',
-	\ 'perl'       : $HOME . '/.vim/dict/perl.dict',
+    \ 'default'    : '',
+    \ 'perl'       : $HOME . '/.vim/dict/perl.dict',
     \ 'javascript' : $HOME . '/.vim/dict/javascript.dict',
     \ 'html'       : $HOME . '/.vim/dict/javascript.dict'
     \ }
@@ -160,49 +157,41 @@ endif
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 "------------------------------------------------------------
-"molokai
-"------------------------------------------------------------
-syntax on
-set t_Co=256
-let g:solarized_termtrans=1
-color Zenburn
-
-"------------------------------------------------------------
-"Zencoding <C-y> and [,] 
+"Zencoding <C-y> and [,]
 "------------------------------------------------------------
 let g:user_zen_settings = { 'indentation':'    ' }
 
 "------------------------------------------------------------
-"unite.vim 
+"unite.vim
 "------------------------------------------------------------
 " 入力モードで開始する
 " let g:unite_enable_start_insert=1
-" バッファ一覧
+" buffer list
 nnoremap <silent> <Space>fb :<C-u>Unite buffer<CR>
-" ファイル一覧
+" file list
 nnoremap <silent> <Space>ff :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-" レジスタ一覧
+" register list 
 nnoremap <silent> <Space>fr :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファ<Space>fル一覧
+" recently use files
 nnoremap <silent> <Space>fm :<C-u>Unite file_mru<CR>
-" 常用セット
+" use wall list
 nnoremap <silent> <Space>fu :<C-u>Unite buffer file_mru<CR>
-" 全部乗せ
+" all
 nnoremap <silent> <Space>fa :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
-" ウィンドウを分割して開く
+" Open by dividing
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" ウィンドウを縦に分割して開く
+" I divided lengthwise
 au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
 au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-" ESCキーを2回押すと終了する
+" exit
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 
-"テーマ適用
-let g:Powerline_theme="unite_status"
-let g:Powerline_colorscheme="unite_status"
+" thema
+"let g:Powerline_theme="unite_status"
+"let g:Powerline_colorscheme="unite_status"
 
 "------------------------------------------------------------
 "taglist
@@ -217,12 +206,7 @@ let Tlist_Exit_OnlyWindow = 1
 let g:SrcExpl_UpdateTags = 1
 
 "------------------------------------------------------------
-"vim-fugitive 
-"------------------------------------------------------------
-"statuslinenにbranch 表示
-
-"------------------------------------------------------------
-"NERDTreeToggle 
+"NERDTreeToggle
 "------------------------------------------------------------
 nmap <silent> nd :NERDTreeToggle<Enter>
 
@@ -277,14 +261,24 @@ vnoremap <silent> = :Align @1 =<CR>
 vnoremap <silent> == =
 
 "------------------------------------------------------------
-"powerline
+"lightline
 "------------------------------------------------------------
 set laststatus=2
-let g:Powerline_symbols = 'fancy'
-"lightline
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'jellybeans',
       \ }
+
+"------------------------------------------------------------
+"powerline
+"------------------------------------------------------------
+"set laststatus=2
+"let g:Powerline_symbols = 'fancy'
+
+"------------------------------------------------------------
+"vim markdown
+"------------------------------------------------------------
+let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_initial_foldlevel=1
 
 "------------------------------------------------------------
 "ColorRoller
@@ -330,13 +324,8 @@ nnoremap <silent><S-F9> :<C-u>call ColorRoller.unroll()<CR>
 
 
 "------------------------------------------------------------
-"文字コード
+" for Japanese
 "------------------------------------------------------------
-
-"------------------------------------------------------------
-" 日本語対応のための設定:
-"------------------------------------------------------------
-" 文字コードの自動認識
 " from http://www.kawaz.jp/pukiwiki/?vim#cb691f26
 if !(has('win32'))
   set termencoding=utf-8
@@ -352,16 +341,16 @@ endif
 if has('iconv')
   let s:enc_euc = 'euc-jp'
   let s:enc_jis = 'iso-2022-jp'
-  " iconvがeucJP-msに対応しているかをチェック
+  " Can iconv support eucJP-ms ?
   if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
     let s:enc_euc = 'eucjp-ms'
     let s:enc_jis = 'iso-2022-jp-3'
-  " iconvがJISX0213に対応しているかをチェック
+  " Can iconv support JISX0213 ?
   elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
     let s:enc_euc = 'euc-jisx0213'
     let s:enc_jis = 'iso-2022-jp-3'
   endif
-  " fileencodingsを構築
+  " fileencodings
   if &encoding ==# 'utf-8'
     let s:fileencodings_default = &fileencodings
 
@@ -389,11 +378,11 @@ if has('iconv')
       let &fileencodings = &fileencodings .','. s:enc_euc
     endif
   endif
-  " 定数を処分
+  " delete constant
   unlet s:enc_euc
   unlet s:enc_jis
 endif
-" 日本語を含まない場合は fileencoding に encoding を使うようにする
+" fileencoding is encoding
 if has('autocmd')
   func! AU_ReCheck_FENC()
     if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
@@ -402,15 +391,14 @@ if has('autocmd')
   endf
   autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
-" 改行コードの自動認識
+" check new line code
 set fileformats=unix,dos,mac
-" □とか○の文字があってもカーソル位置がずれないようにする
+" check design
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
 
-" メッセージを日本語にする (Windowsでは自動的に判断・設定されている)
 if !(has('win32') || has('mac')) && has('multi_lang')
   if !exists('$LANG') || $LANG.'X' ==# 'X'
     if !exists('$LC_CTYPE') || $LC_CTYPE.'X' ==# 'X'
@@ -426,10 +414,10 @@ endif
 set encoding=utf-8
 set fileencodings=iso-2022-jp,cp932,euc-jp,utf-8,ucs-2le,ucs-2
 
-" ファイルを開くとき、改行コードを指定。
+" if open file , use unix.
 set ff=unix
 
-" 改行コードと文字コードを取得
+" get new line code and encode
 func! GetStatusEx()
 let str = ''
 let str = str . '' . &fileformat . ''
@@ -438,32 +426,3 @@ if has('multi_byte') && &fileencoding != ''
 endif
 return str
 endf
-
-
-"------------------------------------------------------------
-"vim statusline
-"------------------------------------------------------------
-"set laststatus=2
-"
-"set statusline+=%F    " バッファ内のファイルのフルパス
-"set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
-"set statusline+=%1l   " 何行目にカーソルがあるか
-"set statusline+=- 
-"set statusline+=%L    " バッファ内の総行数
-"set statusline+=,
-"set statusline+=%c   " 何列目にカーソルがあるか
-"set statusline+=--
-"set statusline+=%V    " 画面上の何列目にカーソルがあるか
-"set statusline+=%P    " ファイル内の何％の位置にあるか
-"
-"set statusline+=%{fugitive#statusline()} " Gitのブランチ名を表示
-"set statusline+=%y%{GetStatusEx()} " ステータスラインに改行コードと文字コードを表示
-"
-"set statusline+=\ \ 
-"
-
-"------------------------------------------------------------
-" load_or remove chef_dict
-"------------------------------------------------------------
-command ChefDicAdd set dictionary+=~/.vim/dict/opscode_chef.dict/*.dict
-command ChefDicRem set dictionary-=~/.vim/dict/opscode_chef.dict/*.dict
