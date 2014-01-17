@@ -23,7 +23,7 @@ if [ -f /etc/zshrc ]; then
 fi
 
 # perlbrew
-source $HOME/perl5/perlbrew/etc/bashrc
+source $HOME/.perl5/perlbrew/etc/bashrc
 
 # rbenv
 export LD_LIBRARY_PATH=/usr/local/lib
