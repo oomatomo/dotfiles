@@ -23,7 +23,7 @@ if [ -f /etc/zshrc ]; then
 fi
 
 # perlbrew
-source $HOME/.perl5/perlbrew/etc/bashrc
+source $HOME/.perl5/etc/bashrc
 
 # rbenv
 export LD_LIBRARY_PATH=/usr/local/lib
@@ -65,13 +65,13 @@ setopt pushd_ignore_dups    # ディレクトリスタックに重複する物�
 HISTFILE=~/.zsh_history     # ヒストリファイルを指定
 HISTSIZE=10000              # ヒストリに保存するコマンド数
 SAVEHIST=10000              # ヒストリファイルに保存するコマンド数
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey -M viins '^P' up-line-or-beginning-search
-bindkey -M viins '^N' down-line-or-beginning-search
-bindkey -M vicmd 'k' up-line-or-beginning-search
-bindkey -M vicmd 'j' down-line-or-beginning-search
+#autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+#zle -N up-line-or-beginning-search
+#zle -N down-line-or-beginning-search
+#bindkey -M viins '^P' up-line-or-beginning-search
+#bindkey -M viins '^N' down-line-or-beginning-search
+#bindkey -M vicmd 'k' up-line-or-beginning-search
+#bindkey -M vicmd 'j' down-line-or-beginning-search
 
 # 履歴のシェルオプション
 
@@ -117,37 +117,45 @@ zstyle ':completion:*:setopt:*' menu true select
 #-----------------------------------------------------------
 # custom
 #-----------------------------------------------------------
-source ~/.oh-my-zsh/custom/zsh-autosuggestions/autosuggestions.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/autosuggestions.zsh
 
+# for emacs mode
 function zle-line-init zle-keymap-select {
-  VIM_NORMAL="%K{208}%F{black}%k%f%K{208}%F{white} % NORMAL %k%f%K{black}%F{208}%k%f"
-  VIM_INSERT="%K{075}%F{black}%k%f%K{075}%F{white} % INSERT %k%f%K{black}%F{075}%k%f"
-  RPROMPT="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
-  RPROMPT2=$RPROMPT
-  zle reset-prompt
   zle autosuggest-start # about zsh-autosuggestions
 }
 
 zle -N zle-line-init
-zle -N zle-keymap-select
+
+# for vi mode
+#function zle-line-init zle-keymap-select {
+#  VIM_NORMAL="%K{208}%F{black}%k%f%K{208}%F{white} % NORMAL %k%f%K{black}%F{208}%k%f"
+#  VIM_INSERT="%K{075}%F{black}%k%f%K{075}%F{white} % INSERT %k%f%K{black}%F{075}%k%f"
+#  RPROMPT="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+#  RPROMPT2=$RPROMPT
+#  zle reset-prompt
+#  zle autosuggest-start # about zsh-autosuggestions
+#}
+#
+#zle -N zle-line-init
+#zle -N zle-keymap-select
+
 
 #-----------------------------------------------------------
 # bindkey
 #-----------------------------------------------------------
 
-bindkey -v # viモード
+#bindkey -v # viモード
+#
+#bindkey -M viins '^k' vi-cmd-mode # ctrl+k
 
-bindkey -M viins '^k' vi-cmd-mode # ctrl+k
-
+# 補完候補を h j k lで選択できる
 zmodload zsh/complist
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 
-# for zsh-autosuggestions
+## for zsh-autosuggestions
 bindkey '^T' autosuggest-toggle
-bindkey -M vicmd '^f' vi-forward-word
-bindkey -M viins '^f' vi-forward-word
-bindkey -M vicmd '^f' vi-forward-blank-word
-bindkey -M viins '^f' vi-forward-blank-word
+bindkey '^f' vi-forward-word
+bindkey '^f' vi-forward-blank-word
