@@ -332,9 +332,6 @@ nnoremap <C-h> <C-w>h
 "-------------------------------------------------------------------------------
 " カラー関連 Colors
 "-------------------------------------------------------------------------------
-syntax enable
-set background=dark
-colorscheme solarized
 
 if &term =~ "xterm-256color" || "screen-256color"
   " 256色
@@ -350,6 +347,13 @@ elseif &term =~ "xterm-color"
   set t_Sf=[3%dm
   set t_Sf=[4%dm
 endif
+
+syntax enable
+" tmux時に色がおかしくなるのを防ぐ
+let g:solarized_termtrans=1
+set background=dark
+colorscheme solarized
+
 
 "-------------------------------------------------------------------------------
 " 編集関連 Edit

@@ -119,6 +119,8 @@ zstyle ':completion:*:setopt:*' menu true select
 # custom
 #-----------------------------------------------------------
 source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/autosuggestions.zsh
+# change color
+export AUTOSUGGESTION_HIGHLIGHT_COLOR='fg=10'
 
 # for emacs mode
 function zle-line-init zle-keymap-select {
