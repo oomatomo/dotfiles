@@ -332,8 +332,9 @@ nnoremap <C-h> <C-w>h
 "-------------------------------------------------------------------------------
 " カラー関連 Colors
 "-------------------------------------------------------------------------------
-" colorscheme yuroyoro256       " colorscheme mrkn256
-color Tomorrow-Night-Eighties
+syntax enable
+set background=dark
+colorscheme solarized
 
 if &term =~ "xterm-256color" || "screen-256color"
   " 256色
@@ -349,8 +350,6 @@ elseif &term =~ "xterm-color"
   set t_Sf=[3%dm
   set t_Sf=[4%dm
 endif
-
-syntax enable                 " ハイライト on
 
 "-------------------------------------------------------------------------------
 " 編集関連 Edit
