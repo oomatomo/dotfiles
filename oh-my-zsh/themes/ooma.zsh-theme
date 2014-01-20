@@ -10,12 +10,22 @@ M=$fg[magenta]
 
 local git_branch='$(git_prompt_info)%{$RE%}$(custom_git_prompt_status)%{$RE%}$(custom_git_remote_status)%{$RE%}'
 
-PROMPT="[%n] %{$Y%}%3F%~%f ${git_branch} %{$C%}bg:%j
+local perl_v='%{$RE%}%{$G%}$(get_perlbrew_list)%{$RE%}'
+
+PROMPT="[%n] %{$Y%}%3F%~%f ${git_branch} %{$C%}bg:%j perl:${perl_v}
 %(?.%{$G%}.%{$W%})%(?!(*'-') <!(*;-;%)? <)%{$RE%}"
 
 PROMPT2='[%n]> '
 
 SPROMPT="%{$R%}%{$suggest%}(*'~'%)? < %B%r%b %{$R%}? [!(y), !(n),a,e]:$RE "
+
+get_perlbrew_list(){
+  STATUS=''
+  if $(which perlbrew &> /dev/null);then
+    LIB=$(perlbrew list 2> /dev/null | grep '*' | sed -e 's/.*perl-//')
+    echo $LIB
+  fi
+}
 
 ZSH_THEME_GIT_PROMPT_PREFIX="-[git]:%{$M%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$RE%}"
