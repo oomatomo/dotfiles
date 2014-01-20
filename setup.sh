@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files=(.vimrc .vimrc.bundle .vimrc.plugins_settings .tmux.conf)
+files=(.vimrc .vimrc.bundle .vimrc.plugins_setting .tmux.conf)
 
 for file in ${files[@]}
 do
