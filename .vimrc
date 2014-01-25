@@ -427,12 +427,12 @@ inoremap <silent> <C-y>e <Esc>ly0<Insert>
 inoremap <silent> <C-y>0 <Esc>ly$<Insert>
 
 " 括弧を自動補完
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
-inoremap < <><LEFT>
+inoremap {} {}<LEFT>
+inoremap [] []<LEFT>
+inoremap () ()<LEFT>
+inoremap "" ""<LEFT>
+inoremap '' ''<LEFT>
+inoremap <> <><LEFT>
 " vnoremap { "zdi^V{<C-R>z}<ESC>
 " vnoremap [ "zdi^V[<C-R>z]<ESC>
 " vnoremap ( "zdi^V(<C-R>z)<ESC>
