@@ -304,6 +304,12 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 
+" CTRL-hjklでウィンドウサイズ調整
+nnoremap <S-j> <C-w>+
+nnoremap <S-k> <C-w>-
+nnoremap <S-l> <C-w>>
+nnoremap <S-h> <C-w><
+
 " git-diff-aware version of gf commands.
 " http://labs.timedia.co.jp/2011/04/git-diff-aware-gf-commands-for-vim.html
 " nnoremap <expr> gf  <SID>do_git_diff_aware_gf('gf')
