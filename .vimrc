@@ -21,8 +21,8 @@ set viminfo='50,<1000,s100,\"50   " viminfoファイルの設定
 set modelines=0                   " モードラインは無効
 set notitle                       " vimを使ってくれてありがとう
 
-" set nobackup                     " バックアップ取らない
-" set noswapfile                   " スワップファイル作らない
+set nobackup                     " バックアップ取らない
+set noswapfile                   " スワップファイル作らない
 " set browsedir=buffer             " Exploreの初期ディレクトリ
 " set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
 
@@ -38,6 +38,10 @@ set ttymouse=xterm2
 set clipboard=unnamed
 " 挿入モードでCtrl+kを押すとクリップボードの内容を貼り付けられるようにする "
 imap <C-p>  <ESC>"*pa
+
+" for perl
+imap <C-d> $
+imap <C-a> @
 
 " ファイルタイプ判定をon
 filetype plugin on
@@ -132,7 +136,6 @@ map <Space>pp <Esc>:'<,'>! perltidy<CR>
 "------------------------------------------------------------
 set wildmenu               " コマンド補完を強化
 set wildchar=<tab>         " コマンド補完を開始するキー
-set wildmode=list:full     " リスト表示，最長マッチ
 set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
@@ -226,22 +229,18 @@ nnoremap <C-i><C-i> :<C-u>help<Space><C-r><C-w><Enter>
 "-------------------------------------------------------------------------------
 " 移動設定 move
 "-------------------------------------------------------------------------------
-" insert mode でjjでesc
-inoremap jj <Esc>
+
+"Chnage Windows
+nnoremap <S-j> <C-w>+
+nnoremap <S-k> <C-w>-
+nnoremap <S-l> <C-w>>
+nnoremap <S-h> <C-w><
 
 "Cursor Force
 nnoremap <Left> :echoe "Fuck Fuck"<CR>
 nnoremap <Right> :echoe "Oh, Jesus"<CR>
 nnoremap <Up> :echoe "Are you kidding"<CR>
 nnoremap <Down> :echoe "Hey Come Back"<CR>
-
-" カーソルを表示行で移動する。論理行移動は<C-n>,<C-p>
-nnoremap h <Left>
-nnoremap j gj
-nnoremap k gk
-nnoremap l <Right>
-nnoremap <Down> gj
-nnoremap <Up>   gk
 
 " 0, 9で行頭、行末へ
 nmap 1 0
@@ -252,10 +251,10 @@ nmap 9 $
 inoremap  <C-e> <END>
 inoremap  <C-a> <HOME>
 " インサートモードでもhjklで移動（Ctrl押すけどね）
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
+" inoremap <C-j> <Down>
+" inoremap <C-k> <Up>
+" inoremap <C-h> <Left>
+" inoremap <C-l> <Right>
 
 "<space>j, <space>kで画面送り
 noremap <Space>j <C-f>
@@ -297,18 +296,6 @@ set virtualedit+=block
 
 "ビジュアルモード時vで行末まで選択
 vnoremap v $h
-
-" CTRL-hjklでウィンドウ移動
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
-
-" CTRL-hjklでウィンドウサイズ調整
-nnoremap <S-j> <C-w>+
-nnoremap <S-k> <C-w>-
-nnoremap <S-l> <C-w>>
-nnoremap <S-h> <C-w><
 
 " git-diff-aware version of gf commands.
 " http://labs.timedia.co.jp/2011/04/git-diff-aware-gf-commands-for-vim.html
@@ -359,7 +346,6 @@ syntax enable
 let g:solarized_termtrans=1
 set background=dark
 colorscheme solarized
-
 
 "-------------------------------------------------------------------------------
 " 編集関連 Edit
@@ -433,12 +419,12 @@ inoremap <silent> <C-y>e <Esc>ly0<Insert>
 inoremap <silent> <C-y>0 <Esc>ly$<Insert>
 
 " 括弧を自動補完
-inoremap {} {}<LEFT>
-inoremap [] []<LEFT>
-inoremap () ()<LEFT>
-inoremap "" ""<LEFT>
-inoremap '' ''<LEFT>
-inoremap <> <><LEFT>
+inoremap { {}<LEFT>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+inoremap < <><LEFT>
 " vnoremap { "zdi^V{<C-R>z}<ESC>
 " vnoremap [ "zdi^V[<C-R>z]<ESC>
 " vnoremap ( "zdi^V(<C-R>z)<ESC>
@@ -446,7 +432,7 @@ inoremap <> <><LEFT>
 " vnoremap ' "zdi'<C-R>z'<ESC>
 
 " 保存時に行末の空白を除去する
-autocmd BufWritePre * :%s/\s\+$//ge
+" autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
 autocmd BufWritePre * :%s/\t/  /ge
 
@@ -458,7 +444,6 @@ inoremap <expr> ,dt strftime('%H:%M:%S')
 " perl tidy
 nnoremap ,pt <Esc>:%! perltidy -se<CR>
 vnoremap ,pt <Esc>:'<,'>! perltidy -se<CR>
-
 
 "-------------------------------------------------------------------------------
 " エンコーディング関連 Encoding

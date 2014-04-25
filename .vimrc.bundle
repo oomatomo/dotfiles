@@ -37,6 +37,9 @@ endif
   " vim-textobj-indent : インデントされたものをtext-objectに
   NeoBundle 'kana/vim-textobj-indent.git'
 
+  " slimのシンタックス
+  NeoBundle 'slim-template/vim-slim.git'
+
 " }}}
 
 " Completion {{{
@@ -44,12 +47,12 @@ endif
   " 補完 autocomplpop.vim : insertmodeで自動で補完をpopup
   " NeoBundle 'AutoComplPop'
 
-  " 補完 neocomplcache.vim : 究極のVim的補完環境
-  " NeoBundleLazy 'Shougo/neocomplete.vim'
-  NeoBundleLazy 'Shougo/neocomplcache.vim'
+  " 補完 neocomplcache : 究極のVim的補完環境
+  NeoBundle 'Shougo/neocomplcache'
 
   " neocomplcacheのsinpet補完
-  NeoBundleLazy 'Shougo/neosnippet'
+  NeoBundle 'Shougo/neosnippet'
+  NeoBundle 'Shougo/neosnippet-snippets'
 
   " various langueages snippets
   " NeoBundle 'honza/snipmate-snippets'
@@ -206,6 +209,7 @@ endif
   NeoBundle 'ujihisa/unite-colorscheme'
   NeoBundle 'tsukkee/unite-help'
   NeoBundle 'Sixeight/unite-grep'
+  NeoBundle 'kmnk/vim-unite-giti'
   " NeoBundle 'h1mesuke/unite-outline'
   " NeoBundle 'basyura/unite-rails'
   " NeoBundle 'thinca/vim-unite-history'

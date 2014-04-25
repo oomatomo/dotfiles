@@ -12,7 +12,7 @@ local git_branch='$(git_prompt_info)%{$RE%}$(custom_git_prompt_status)%{$RE%}$(c
 
 local perl_v='%{$RE%}%{$G%}$(get_perlbrew_list)%{$RE%}'
 
-PROMPT="[%n] %{$Y%}%3F%~%f ${git_branch} %{$C%}bg:%j perl:${perl_v}
+PROMPT="[%n] %{$Y%}%3F%~%f ${git_branch} %{$C%}bg:%j perl:${perl_v} ruby:$( rbenv_prompt_info )
 %(?.%{$G%}.%{$W%})%(?!(*'-') <!(*;-;%)? <)%{$RE%}"
 
 PROMPT2='[%n]> '
