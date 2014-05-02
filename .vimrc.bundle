@@ -163,6 +163,9 @@ endif
   " vtreeexplorer.vim : ツリー状にファイルやディレクトリの一覧を表示
   NeoBundle 'vtreeexplorer'
 
+  " vimfiler
+  NeoBundle 'Shougo/vimfiler'
+
 " }}}
 
 " Utility {{{
