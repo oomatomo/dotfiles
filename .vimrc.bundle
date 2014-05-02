@@ -78,6 +78,9 @@ endif
   "  http://blog.glidenote.com/blog/2013/02/28/the-silver-searcher-better-than-ack/
   NeoBundle 'rking/ag.vim'
 
+  " スクロールの高速化
+  NeoBundle 'rhysd/accelerated-jk'
+
 " }}}
 
 " Encording {{{
