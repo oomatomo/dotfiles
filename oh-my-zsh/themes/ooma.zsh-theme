@@ -1,18 +1,18 @@
 # color
 RE=${reset_color}
 W=$fg[white]
-G=$fg_bold[green]
-Y=$fg_bold[yellow]
-R=$fg_bold[red]
-B=$fg_bold[blue]
-C=$fg_bold[cyan]
+G=$fg[green]
+Y=$fg[yellow]
+R=$fg[red]
+B=$fg[blue]
+C=$fg[cyan]
 M=$fg[magenta]
 
 local git_branch='$(git_prompt_info)%{$RE%}$(custom_git_prompt_status)%{$RE%}$(custom_git_remote_status)%{$RE%}'
 
 local perl_v='%{$RE%}%{$G%}$(get_perlbrew_list)%{$RE%}'
 
-PROMPT="[%n] %{$Y%}%3F%~%f ${git_branch} %{$C%}bg:%j perl:${perl_v} ruby:$( rbenv_prompt_info )
+PROMPT="[%n] %{$Y%}%3F%~%f ${git_branch} %{$C%}bg:%{$R%}%j %{$C%}perl:${perl_v} %{$C%}ruby:%{$M%}$( rbenv_prompt_info )
 %(?.%{$G%}.%{$W%})%(?!(*'-') <!(*;-;%)? <)%{$RE%}"
 
 PROMPT2='[%n]> '
