@@ -27,15 +27,13 @@ set noswapfile                   " スワップファイル作らない
 " set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
 
 " OSのクリップボードを使用する
-set clipboard=unnamed
+set clipboard+=unnamed
 
 " ターミナルでマウスを使用できるようにする
 set mouse=a
 set guioptions+=a
 set ttymouse=xterm2
 
-"ヤンクした文字は、システムのクリップボードに入れる"
-set clipboard=unnamed
 " 挿入モードでCtrl+kを押すとクリップボードの内容を貼り付けられるようにする "
 imap <C-p>  <ESC>"*pa
 
