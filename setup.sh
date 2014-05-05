@@ -17,6 +17,10 @@ if [ ! -d $HOME/.vim/bundle/neobundle.vim ]; then
     git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim
 fi
 
+if [ ! -d $HOME/.oh-my-zsh ]; then
+    echo 'install oh-my-zsh'
+    curl -L http://install.ohmyz.sh | sh
+fi
 
 # oh-my-zshの設定
 rm -rf $HOME/.oh-my-zsh/custom
