@@ -19,7 +19,7 @@ fi
 
 if [ ! -d $HOME/.oh-my-zsh ]; then
     echo 'install oh-my-zsh'
-    curl -L http://install.ohmyz.sh | sh
+    curl -L https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 fi
 
 # oh-my-zshの設定
