@@ -95,7 +95,13 @@ setopt share_history        # 他のシェルのヒストリをリアルタイ�
 # color
 #-----------------------------------------------------------
 autoload -U colors; colors
-eval $(dircolors ~/.oh-my-zsh/custom/dircolors.ansi-universal)
+if [ -f ~/.oh-my-zsh/custom/dircolors.ansi-universal ]; then
+    if type dircolors > /dev/null 2>&1; then
+        eval $(dircolors ~/.oh-my-zsh/custom/dircolors.ansi-universal)
+    elif type gdircolors > /dev/null 2>&1; then
+        eval $(gdircolors ~/.oh-my-zsh/custom/dircolors.ansi-universal)
+    fi
+fi
 #export LS_COLORS="di=38;05;21:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32";
 zstyle ':completion:*:default*' list- ${(s.:.)LS_COLORS}
 
