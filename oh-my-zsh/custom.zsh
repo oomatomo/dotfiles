@@ -27,13 +27,18 @@ source $HOME/.perl5/etc/bashrc
 
 # rbenv
 export LD_LIBRARY_PATH=/usr/local/lib
-export RBENV_ROOT="${HOME}/.rbenv"
+#export RBENV_ROOT="${HOME}/.rbenv"
 export PATH="${RBENV_ROOT}/bin:${PATH}"
 eval "$(rbenv init -)"
 
 # nodebrew
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+# go
+export GOROOT=`go env GOROOT`
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
 #-----------------------------------------------------------
 # setopt
 #-----------------------------------------------------------
