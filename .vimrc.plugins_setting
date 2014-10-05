@@ -116,7 +116,6 @@ nnoremap <Space>gb :<C-u>Gblame<Enter>
 "------------------------------------
 " NERDTreeToggle
 "------------------------------------
-
 nmap <silent> nd :NERDTreeToggle<Enter>
 
 "------------------------------------
@@ -126,15 +125,56 @@ nmap <silent> nd :NERDTreeToggle<Enter>
 nmap <silent> tl :TlistToggle<Enter>
 let Tlist_Use_Right_Window = 1  " 右側でtaglistのウィンドーを表示
 let Tlist_Exit_OnlyWindow = 1   " taglistのウィンドーが最後のウィンドーならばVimを閉じる
-let Tlist_Auto_Open = 1         " 自動表示
-let Tlist_Auto_Update = 1       " 自動更新
+"let Tlist_Auto_Open = 1         " 自動表示
+"let Tlist_Auto_Update = 1       " 自動更新
 
+"------------------------------------
+" tagbar.vim
+"------------------------------------
+nmap <silent> tt :TagbarToggle<Enter>
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+"------------------------------------
+" vim-go.vimr
+"------------------------------------
+autocmd FileType go nmap <leader>r <Plug>(go-run)
+autocmd FileType go nmap <leader>b <Plug>(go-build)
+autocmd FileType go nmap <leader>t <Plug>(go-test)
+autocmd FileType go nmap <leader>c <Plug>(go-coverage)
+"
 "------------------------------------
 " quickRun
 "------------------------------------
 
 " nmap <silent> qr :QuickRun -outputter/buffer/close_on_empty 1<Enter>
 nmap <silent> qr :QuickRun -hook/time/enable 1<Enter>
+set splitbelow
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
 "------------------------------------
@@ -144,10 +184,20 @@ nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() 
 let g:syntastic_enable_signs = 1          " エラー行をsignで表示する
 let g:syntastic_enable_highlighting = 1   " 可能ならhighligt表示する
 "let g:syntastic_auto_loc_list=1           " 自動的に開いたり閉じたりする
-let g:syntastic_mode_map = { 'mode': 'passive' }
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_quiet_messages = 0
 
+if $GOROOT != ''
+    " go get github.com/golang/lint/golint
+    set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+    let g:syntastic_go_checkers = ['go', 'golint', 'govet']
+endif
+
+" mode
+" passiveはバッファ保存時にsyntasticを実行しない
+" active はバッファ保存時にsyntasticを実行する
+let g:syntastic_mode_map = { 'mode': 'passive',
+                            \ 'active_filetypes': ['ruby', 'go'] }
 "------------------------------------
 " vim-indent-guides
 "------------------------------------

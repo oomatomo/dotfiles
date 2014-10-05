@@ -114,6 +114,12 @@ endif
   " htmlのショートカット
   NeoBundle 'mattn/emmet-vim'
 
+  " go
+  NeoBundle 'fatih/vim-go'
+
+  "
+  NeoBundle 'majutsushi/tagbar'
+
 " }}}
 
 " Syntax {{{

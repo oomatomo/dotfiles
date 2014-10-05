@@ -4,6 +4,12 @@ source ~/.vimrc.bundle
 " プラグインに依存するアレ
 source ~/.vimrc.plugins_setting
 
+" Go用の設定の読み込み
+if $GOROOT != ''
+    set rtp+=$GOROOT/misc/vim
+    set rtp+=$GOPATH/src/github.com/nsf/gocode/vim
+endif
+
 "------------------------------------------------------------
 " 基本設定config
 "------------------------------------------------------------
