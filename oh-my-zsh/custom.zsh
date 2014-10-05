@@ -1,4 +1,8 @@
 
+if [ -f /etc/zshrc ]; then
+    . /etc/zshrc
+fi
+
 #-----------------------------------------------------------
 # basic
 #-----------------------------------------------------------
@@ -15,15 +19,22 @@ alias grep='grep --color=auto -n'
 alias rmysql='mysql -u root -p'
 alias sudo='nocorrect sudo'
 alias tmux='tmux -2'
+alias ssh='TERM=xterm ssh'
 
-alias perlv='echo "perl -MTest::More -e print \$Test::More::VERSION"'
+# docker
+alias docker='sudo docker'
+alias docrm='sudo docker ps -l -q | xargs sudo docker kill | xargs sudo docker rm'
+alias docip='sudo docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
 
-if [ -f /etc/zshrc ]; then
-    . /etc/zshrc
-fi
+# svn
+alias svndv='svn diff | vim -R -'
+function svn_diff_stop_on_copy {
+  local revision_by_stop_on_copy=`svn log --stop-on-copy -q --incremental | tail -1 | sed 's/^r\([0-9]\+\).*$/\1/' | tr -d '\n'`
+  svn diff -r $revision_by_stop_on_copy:HEAD | vim -R -
+}
 
 # perlbrew
-source $HOME/.perl5/etc/bashrc
+#source $HOME/perl5/perlbrew/etc/bashrc
 
 # rbenv
 export LD_LIBRARY_PATH=/usr/local/lib
@@ -39,6 +50,33 @@ export GOROOT=`go env GOROOT`
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
+#export PATH=$PATH:$HOME/go/bin
+
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+function agvi() {
+  vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
+  #if "$result" -ne ''; then
+  #    vi $result
+  #else
+  #    echo "not select or not found"
+  #fi
+}
+
 #-----------------------------------------------------------
 # setopt
 #-----------------------------------------------------------

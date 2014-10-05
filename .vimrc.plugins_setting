@@ -244,7 +244,7 @@ nnoremap <silent> [unite]s  :<C-u>Unite snippet<CR>
 " color一覧
 nnoremap <silent> [unite]c  :<C-u>Unite colorscheme<CR>
 
-" nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
 " ウィンドウを分割して開く
 au Filetype unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('splist')

@@ -11,8 +11,9 @@ M=$fg[magenta]
 local git_branch='$(git_prompt_info)%{$RE%}$(custom_git_prompt_status)%{$RE%}$(custom_git_remote_status)%{$RE%}'
 
 local perl_v='%{$RE%}%{$G%}$(get_perlbrew_list)%{$RE%}'
+local ruby_v='$(ruby_version)'
 
-PROMPT="[%n] %{$Y%}%3F%~%f ${git_branch} %{$C%}bg:%{$R%}%j %{$C%}perl:${perl_v} %{$C%}ruby:%{$M%}$( rbenv_prompt_info )
+PROMPT="[%n] %{$Y%}%3F%~%f ${git_branch} %{$C%}bg:%{$R%}%j %{$C%}perl:${perl_v} %{$C%}ruby:%{$M%} ${ruby_v}
 %(?.%{$G%}.%{$W%})%(?!(*'-') <!(*;-;%)? <)%{$RE%}"
 
 PROMPT2='[%n]> '
@@ -24,6 +25,13 @@ get_perlbrew_list(){
   if $(which perlbrew &> /dev/null);then
     LIB=$(perlbrew list 2> /dev/null | grep '*' | sed -e 's/.*perl-//')
     echo $LIB
+  fi
+}
+
+ruby_version(){
+  if $(which ruby &> /dev/null);then
+    VERSION=$(ruby -v 2> /dev/null | sed -e 's/ruby //' -e 's/(.*//')
+    echo $VERSION
   fi
 }
 
