@@ -1,0 +1,11 @@
+# perlbrew
+source $HOME/perl5/perlbrew/etc/bashrc
+export RBENV_ROOT="${HOME}/.rbenv"
+
+# nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# go
+export GOROOT=$HOME/.go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin

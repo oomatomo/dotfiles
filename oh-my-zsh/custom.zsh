@@ -3,6 +3,16 @@ if [ -f /etc/zshrc ]; then
     . /etc/zshrc
 fi
 
+case ${OSTYPE} in
+  # Mac
+  darwin*)
+    source ~/.oh-my-zsh/custom/custom.darwin
+    ;;
+  linux*)
+    source ~/.oh-my-zsh/custom/custom.linux
+    ;;
+esac
+
 #-----------------------------------------------------------
 # basic
 #-----------------------------------------------------------
@@ -18,8 +28,15 @@ alias la='ls -la'
 alias grep='grep --color=auto -n'
 alias rmysql='mysql -u root -p'
 alias sudo='nocorrect sudo'
-alias tmux='tmux -2'
+alias tmux='tmux'
+alias stmux='ssh-agent tmux -2'
 alias ssh='TERM=xterm ssh'
+
+# |
+
+alias V='| vim -R -'
+alias G='| grep'
+alias L='| less'
 
 # docker
 alias docker='sudo docker'
@@ -33,25 +50,11 @@ function svn_diff_stop_on_copy {
   svn diff -r $revision_by_stop_on_copy:HEAD | vim -R -
 }
 
-# perlbrew
-#source $HOME/perl5/perlbrew/etc/bashrc
-
 # rbenv
-export LD_LIBRARY_PATH=/usr/local/lib
-#export RBENV_ROOT="${HOME}/.rbenv"
 export PATH="${RBENV_ROOT}/bin:${PATH}"
 eval "$(rbenv init -)"
 
-# nodebrew
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-# go
-export GOROOT=`go env GOROOT`
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
-#export PATH=$PATH:$HOME/go/bin
-
+# peco
 function peco-select-history() {
     local tac
     if which tac > /dev/null; then
@@ -70,12 +73,19 @@ bindkey '^r' peco-select-history
 
 function agvi() {
   vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
-  #if "$result" -ne ''; then
-  #    vi $result
-  #else
-  #    echo "not select or not found"
-  #fi
 }
+
+function peco-tmux {
+  local f='#{window_index}: #{window_name}#{window_flags} #{pane_current_path}'
+
+  tmux lsw -F "$f" \
+      | peco --query "$LBUFFER" \
+      | cut -d ':' -f 1 \
+      | xargs tmux select-window -t
+}
+
+zle -N peco-tmux
+bindkey '^et' peco-tmux
 
 #-----------------------------------------------------------
 # setopt
@@ -148,14 +158,32 @@ fi
 #export LS_COLORS="di=38;05;21:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32";
 zstyle ':completion:*:default*' list- ${(s.:.)LS_COLORS}
 
+local RE=${reset_color}
+local W=$fg[white]
+local G=$fg[green]
+local Y=$fg[yellow]
+local R=$fg[red]
+local B=$fg[blue]
+local C=$fg[cyan]
+local M=$fg[magenta]
+
+
 #-----------------------------------------------------------
 # completion
 #-----------------------------------------------------------
 
+# 補完オン
+autoload -U compinit
+compinit
+
+# 選択状態をハイライト表示
+zstyle ':completion:*:default' menu select=2
+
 # 一覧表示でグループ化を行う
 zstyle ':completion:*' group-name ''
 # グループ化での説明を追加出来る %dに説明が入る
-zstyle ':completion:*:descriptions' format 'Completing %d'
+zstyle ':completion:*:descriptions' format $'\e[00;34m%d'
+zstyle ':completion:*:messages' format $'\e[00;31m%d'
 
 # オプションの補完時のデザイン
 zstyle ':completion:*' list-separator '-->'
