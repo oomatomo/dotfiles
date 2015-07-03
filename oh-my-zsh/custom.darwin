@@ -13,4 +13,6 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 export NODEBREW_ROOT=/usr/local/var/nodebrew
 
 # boot2docker
-eval "$(boot2docker shellinit)"
+if [ "`boot2docker status`" = "running" ]; then
+  eval $(boot2docker shellinit 2>/dev/null)
+fi

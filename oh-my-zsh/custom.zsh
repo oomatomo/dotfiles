@@ -39,9 +39,9 @@ alias G='| grep'
 alias L='| less'
 
 # docker
-alias docker='sudo docker'
-alias docrm='sudo docker ps -l -q | xargs sudo docker kill | xargs sudo docker rm'
-alias docip='sudo docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
+#alias docker='sudo docker'
+#alias docrm='sudo docker ps -l -q | xargs sudo docker kill | xargs sudo docker rm'
+#alias docip='sudo docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
 
 # svn
 alias svndv='svn diff | vim -R -'
