@@ -12,10 +12,12 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export NODEBREW_ROOT=/usr/local/var/nodebrew
 export PATH=$NODEBREW_ROOT/current/bin:$PATH
 
+# docker-machine
+eval "$(docker-machine env default)"
 # boot2docker
-if [ "`boot2docker status`" = "running" ]; then
-  eval $(boot2docker shellinit 2>/dev/null)
-fi
+#if [ "`boot2docker status`" = "running" ]; then
+#  eval $(boot2docker shellinit 2>/dev/null)
+#fi
 
 # plenv
 if which plenv > /dev/null; then eval "$(plenv init -)"; fi
