@@ -13,7 +13,7 @@ export NODEBREW_ROOT=/usr/local/var/nodebrew
 export PATH=$NODEBREW_ROOT/current/bin:$PATH
 
 # docker-machine
-eval "$(docker-machine env default)"
+eval "$(docker-machine env dev)"
 # boot2docker
 #if [ "`boot2docker status`" = "running" ]; then
 #  eval $(boot2docker shellinit 2>/dev/null)
