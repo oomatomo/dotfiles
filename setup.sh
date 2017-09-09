@@ -16,6 +16,16 @@ if [ ! -e $HOME/.config/nvim/init.vim ]; then
     ln -s $HOME/git/dotfiles/nvim/init.vim $HOME/.config/nvim/init.vim
 fi
 
+if [ ! -e $HOME/.config/nvim/base.vim ]; then
+    mkdir -p $HOME/.config/nvim/
+    ln -s $HOME/git/dotfiles/nvim/base.vim $HOME/.config/nvim/base.vim
+fi
+
+if [ ! -e $HOME/.config/nvim/plugin.vim ]; then
+    mkdir -p $HOME/.config/nvim/
+    ln -s $HOME/git/dotfiles/nvim/plugin.vim $HOME/.config/nvim/plugin.vim
+fi
+
 if [ ! -e $HOME/.local/share/nvim/site/autoload/plug.vim ]; then
     curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
