@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files=(.vimrc .vimrc.bundle .vimrc.plugins_setting .tmux.conf)
+files=(.tmux.conf)
 
 for file in ${files[@]}
 do
@@ -10,12 +10,17 @@ do
    fi
 done
 
-# install neobundle
-if [ ! -d $HOME/.vim/bundle/neobundle.vim ]; then
-    echo 'get neobundle'
-    mkdir -p $HOME/.vim/bundle
-    git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim
+# for neovim
+if [ ! -e $HOME/.config/nvim/init.vim ]; then
+    mkdir -p $HOME/.config/nvim/
+    ln -s $HOME/git/dotfiles/nvim/init.vim $HOME/.config/nvim/init.vim
 fi
+
+if [ ! -e $HOME/.local/share/nvim/site/autoload/plug.vim ]; then
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
 
 if [ ! -d $HOME/.oh-my-zsh ]; then
     echo 'install oh-my-zsh'
