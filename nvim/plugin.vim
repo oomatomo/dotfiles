@@ -6,6 +6,9 @@ Plug 'rhysd/accelerated-jk'
 Plug 'itchyny/lightline.vim'
 "カラースキーマ
 Plug 'mhartington/oceanic-next'
+"fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -59,3 +62,8 @@ endfunction
 set termguicolors
 syntax enable
 colorscheme OceanicNext
+
+"fzf
+nnoremap <silent> <C-f>g :GFiles<CR>
+nnoremap <silent> <C-f>s :GFiles?<CR>
+nnoremap <silent> <C-f>h :History<CR>
