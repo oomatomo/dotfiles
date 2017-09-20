@@ -75,6 +75,25 @@ function agvi() {
   vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
 }
 
+function ec2ssh() {
+  # aws-cli, jq, peco
+  hosts=(`aws ec2 describe-instances --profile $@ --filter "Name=instance-state-name,Values=running" | \
+      jq -r '.Reservations[].Instances[] | .PrivateIpAddress as $p | .Tags[] | { ip: $p, name: select(.Key == "Name").Value } | flatten | join("\t") ' | \
+      sort -t$'\t' -k 2 | peco --query "$LBUFFER" | awk -F '\t' '{print $1}' ` )
+  cnt=0
+  # 一番上のパネルに移動してsshしていく
+  tmux select-pane -t 0
+  for host in $hosts; do
+    tmux split-window
+    tmux send-keys -t $cnt "ssh octpass-$host" C-m
+    tmux send-keys -t $cnt "clear" C-m
+    ((cnt++))
+  done
+  tmux select-pane -t 0
+  # デザイン修正
+  tmux select-layout even-vertical
+}
+
 function peco-tmux {
   local f='#{window_index}: #{window_name}#{window_flags} #{pane_current_path}'
 
