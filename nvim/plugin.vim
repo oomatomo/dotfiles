@@ -9,6 +9,8 @@ Plug 'mhartington/oceanic-next'
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+"コメントアウト
+Plug 'scrooloose/nerdcommenter'
 
 call plug#end()
 
@@ -67,3 +69,9 @@ colorscheme OceanicNext
 nnoremap <silent> <C-f>g :GFiles<CR>
 nnoremap <silent> <C-f>s :GFiles?<CR>
 nnoremap <silent> <C-f>h :History<CR>
+
+"nerdcommenter
+"コメントの間にスペースを空ける
+let NERDSpaceDelims = 1
+"未対応ファイルタイプのエラーメッセージを表示しない
+let NERDShutUp=1
