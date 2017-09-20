@@ -152,3 +152,16 @@ set wildchar=<tab>
 set history=1000
 "補完に辞書ファイル追加
 set complete+=k
+
+"Ex-modeでの<C-p><C-n>をzshのヒストリ補完っぽくする
+cnoremap <C-p> <Up>
+cnoremap <Up>  <C-p>
+cnoremap <C-n> <Down>
+cnoremap <Down>  <C-n>
+
+"移動設定 move
+"矢印キーを使えないようにする
+nnoremap <Left> :echoe "Fuck Fuck"<CR>
+nnoremap <Right> :echoe "Oh, Jesus"<CR>
+nnoremap <Up> :echoe "Are you kidding"<CR>
+nnoremap <Down> :echoe "Hey Come Back"<CR>
