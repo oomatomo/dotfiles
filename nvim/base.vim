@@ -117,6 +117,15 @@ set hlsearch
 "Escの2回押しでハイライト消去
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 
+"sgでカーソル下のコマンドを検索
+nnoremap <expr> sg ':/' . expand('<cword>') . '/'
+"選択した文字列を検索
+vnoremap <silent> // y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
+"選択した文字列を置換
+vnoremap /r "xy;%s/<C-R>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
+"s*置換後文字列/g<Cr>でカーソル下のキーワードを置換
+nnoremap <expr> s* ':%substitute/\<' . expand('<cword>') . '\>/'
+
 "カラー
 "カラーの256色対応
 if &term =~ "xterm-256color" || "screen-256color"
