@@ -11,6 +11,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "コメントアウト
 Plug 'scrooloose/nerdcommenter'
+"tmuxとクリップボードの共有
+Plug 'roxma/vim-tmux-clipboard'
 
 call plug#end()
 
