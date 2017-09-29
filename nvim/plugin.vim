@@ -14,6 +14,8 @@ Plug 'scrooloose/nerdcommenter'
 "tmuxとクリップボードの共有
 Plug 'roxma/vim-tmux-clipboard'
 
+Plug 'scrooloose/nerdtree'
+
 call plug#end()
 
 "accelerated-jk
@@ -68,6 +70,7 @@ syntax enable
 colorscheme OceanicNext
 
 "fzf
+nnoremap <silent> <C-f>f :Files<CR>
 nnoremap <silent> <C-f>g :GFiles<CR>
 nnoremap <silent> <C-f>s :GFiles?<CR>
 nnoremap <silent> <C-f>h :History<CR>
@@ -77,3 +80,6 @@ nnoremap <silent> <C-f>h :History<CR>
 let NERDSpaceDelims = 1
 "未対応ファイルタイプのエラーメッセージを表示しない
 let NERDShutUp=1
+
+"nerdtree
+nmap <silent> nd :NERDTreeToggle<Enter>
