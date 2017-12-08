@@ -160,6 +160,27 @@ cnoremap <C-n> <Down>
 cnoremap <Down>  <C-n>
 
 "移動設定 move
+"Chnage Windows
+nnoremap <S-j> <C-w>+
+nnoremap <S-k> <C-w>-
+nnoremap <S-l> <C-w>>
+nnoremap <S-h> <C-w><
+
+"Cursor Force
+nnoremap <Left> :echoe "Fuck Fuck"<CR>
+nnoremap <Right> :echoe "Oh, Jesus"<CR>
+nnoremap <Up> :echoe "Are you kidding"<CR>
+nnoremap <Down> :echoe "Hey Come Back"<CR>
+
+" 0, 9で行頭、行末へ
+nmap 1 0
+nmap 0 ^
+nmap 9 $
+
+" insert mode での移動
+inoremap  <C-e> <END>
+inoremap  <C-a> <HOME>
+
 "矢印キーを使えないようにする
 nnoremap <Left> :echoe "Fuck Fuck"<CR>
 nnoremap <Right> :echoe "Oh, Jesus"<CR>
