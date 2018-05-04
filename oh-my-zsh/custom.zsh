@@ -19,6 +19,7 @@ esac
 export EDITOR='vim'
 export SVN_EDITOR='vim'
 export LANG=ja_JP.UTF-8
+export PATH="${PATH}:/usr/local/bin/"
 
 # User specific aliases and functions
 alias rm='rm -i'
@@ -89,7 +90,7 @@ function e2sh() {
     if [[ $cnt -gt 0 ]]; then
       tmux split-window
     fi
-    tmux send-keys -t $cnt "ssh octpass-$host" C-m
+    tmux send-keys -t $cnt "ssh $host" C-m
     tmux send-keys -t $cnt "clear" C-m
     ((cnt++))
   done
