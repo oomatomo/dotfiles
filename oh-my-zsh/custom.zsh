@@ -79,6 +79,7 @@ function agvi() {
 function e2sh() {
   # aws-cli, jq, peco
   profile=${1:-default}
+  ssh_prefix=${2:-default}
   # Tgas[]? = タグが一つもの存在しないものは除外する
   hosts=(`aws ec2 describe-instances --profile $profile --filter "Name=instance-state-name,Values=running" | \
       jq -r '.Reservations[].Instances[] | .PrivateIpAddress as $p | .Tags[]? | { ip: $p, name: select(.Key == "Name").Value } | flatten | join("\t") ' | \
@@ -90,7 +91,7 @@ function e2sh() {
     if [[ $cnt -gt 0 ]]; then
       tmux split-window
     fi
-    tmux send-keys -t $cnt "ssh $host" C-m
+    tmux send-keys -t $cnt "ssh $ssh_prefix-$host" C-m
     tmux send-keys -t $cnt "clear" C-m
     ((cnt++))
   done

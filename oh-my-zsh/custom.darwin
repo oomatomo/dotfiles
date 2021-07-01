@@ -3,14 +3,20 @@ export RBENV_ROOT=/usr/local/var/rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # go
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
-export GOROOT=`go env GOROOT`
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+#export PATH=$PATH:/usr/local/opt/go/libexec/bin
+#export GOROOT=`go env GOROOT`
+#export GOPATH=$HOME/go
+#export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+export PATH="$HOME/.goenv/bin:$PATH"
+eval "$(goenv init -)"
 
 # nodebrew
-export NODEBREW_ROOT=/usr/local/var/nodebrew
-export PATH=$NODEBREW_ROOT/current/bin:$PATH
+#export NODEBREW_ROOT=/usr/local/var/nodebrew
+#export PATH=$NODEBREW_ROOT/current/bin:$PATH
+
+# nvm
+source $(brew --prefix nvm)/nvm.sh
 
 # docker-machine
 #eval "$(docker-machine env default)"
@@ -20,4 +26,15 @@ export PATH=$NODEBREW_ROOT/current/bin:$PATH
 #fi
 
 # plenv
-if which plenv > /dev/null; then eval "$(plenv init -)"; fi
+#if which plenv > /dev/null; then eval "$(plenv init -)"; fi
+
+# python
+alias python='python3'
+
+# docker-compose
+alias dc='NO_PROXY=* docker-compose'
+# neovim
+alias vim='nvim'
+
+# mysql
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
