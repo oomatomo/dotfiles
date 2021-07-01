@@ -58,6 +58,11 @@ set lazyredraw
 "高速ターミナル接続を行う
 set ttyfast
 
+" custom filetype
+au BufRead,BufNewFile *.js.ejs setfiletype javascript
+au BufRead,BufNewFile *.pug setfiletype html
+au BufRead,BufNewFile *.scss setfiletype css
+
 "インデント
 "自動でインデント
 set autoindent
@@ -88,7 +93,7 @@ if has("autocmd")
   autocmd FileType coppffee   setlocal sw=2 sts=2 ts=2 et
   autocmd FileType perl       setlocal sw=2 sts=2 ts=2 et
   autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType python     setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType python     setlocal sw=4 sts=4 ts=4 et
   autocmd FileType ruby       setlocal sw=2 sts=2 ts=2 et
   autocmd FileType haml       setlocal sw=2 sts=2 ts=2 et
   autocmd FileType sh         setlocal sw=2 sts=2 ts=2 et
@@ -101,6 +106,7 @@ if has("autocmd")
   autocmd FileType yaml       setlocal sw=2 sts=2 ts=2 et
   autocmd FileType zsh        setlocal sw=2 sts=2 ts=2 et
   autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType json       setlocal sw=2 sts=2 ts=2 et
 endif
 
 "検索
