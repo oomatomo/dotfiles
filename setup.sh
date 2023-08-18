@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# brew
+brew install git
+brew install tmux
+brew install zsh
+brew install jq
+brew install peco
+brew install nvm
+brew install neovim
+brew install reattach-to-user-namespace
+
+# SDKMAN!
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk version
+
 files=(.tmux.conf)
 
 for file in ${files[@]}
@@ -46,3 +61,16 @@ if [ ! -d $HOME/git/dotfiles/oh-my-zsh/plugins ]; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/git/dotfiles/oh-my-zsh/plugins/zsh-syntax-highlighting
   git clone https://github.com/tarruda/zsh-autosuggestions $HOME/git/dotfiles/oh-my-zsh/plugins/zsh-autosuggestions
 fi
+
+# neovim
+# PlugInstallを実行
+# https://github.com/junegunn/vim-plug
+
+# oh-my-zsh
+# zshrcのテーマをoomatomoに変更
+# ZSH_THEME="oomatomo"
+
+# tmux
+# iterm2でcopy&pasteの許可を行う
+# General -> Selection -> Applications interminal may access clipboard
+
