@@ -39,39 +39,6 @@ alias V='| vim -R -'
 alias G='| grep'
 alias L='| less'
 
-# docker
-#alias docker='sudo docker'
-#alias docrm='sudo docker ps -l -q | xargs sudo docker kill | xargs sudo docker rm'
-#alias docip='sudo docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
-
-# svn
-alias svndv='svn diff | vim -R -'
-function svn_diff_stop_on_copy {
-  local revision_by_stop_on_copy=`svn log --stop-on-copy -q --incremental | tail -1 | sed 's/^r\([0-9]\+\).*$/\1/' | tr -d '\n'`
-  svn diff -r $revision_by_stop_on_copy:HEAD | vim -R -
-}
-
-# rbenv
-export PATH="${RBENV_ROOT}/bin:${PATH}"
-eval "$(rbenv init -)"
-
-# peco
-#function peco-select-history() {
-#    local tac
-#    if which tac > /dev/null; then
-#        tac="tac"
-#    else
-#        tac="tail -r"
-#    fi
-#    BUFFER=$(\history -n 1 | \
-#        eval $tac | \
-#        peco --query "$LBUFFER")
-#    CURSOR=$#BUFFER
-#    zle clear-screen
-#}
-#zle -N peco-select-history
-#bindkey '^r' peco-select-history
-
 function agvi() {
   vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
 }
