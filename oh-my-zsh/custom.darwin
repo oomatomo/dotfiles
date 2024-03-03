@@ -15,3 +15,20 @@ alias python='python3'
 alias dc='NO_PROXY=* docker-compose'
 # neovim
 alias vim='nvim'
+
+# for git-duet
+export GIT_DUET_ROTATE_AUTHOR=1
+
+# go
+# for testcontainer colima
+# https://golang.testcontainers.org/system_requirements/using_colima/
+# not set enviroment. [docker use colima] this command used.
+export DOCKER_HOST=unix://${HOME}/.colima/default/docker.sock
+# before this command
+# sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
+export TESTCONTAINERS_RYUK_DISABLED=true
+# for go modules in private repository
+export TGO111MODULE=on
+
+setopt incappendhistory
