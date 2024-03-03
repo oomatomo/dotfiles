@@ -1,7 +1,10 @@
-name: Create tag
+name: Create release tag
 
 on:
   workflow_dispatch:
+
+env:
+  TZ: Asia/Tokyo
 
 jobs:
   tag:
