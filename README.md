@@ -1,0 +1,6 @@
+# dotfilese
+
+install
+```
+./setup.sh
+```
