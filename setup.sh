@@ -9,6 +9,9 @@ brew install peco
 brew install nvm
 brew install neovim
 brew install reattach-to-user-namespace
+brew install wget
+brew install mysql
+brew install tfenv
 
 # SDKMAN!
 curl -s "https://get.sdkman.io" | bash
