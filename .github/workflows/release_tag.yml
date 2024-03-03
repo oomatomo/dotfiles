@@ -1,0 +1,22 @@
+name: Create tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup release version
+        run: |
+          echo "release_version=v$(date '+%Y%m%d').${{ github.run_number }}" >> "$GITHUB_ENV"
+      - name: Make new release
+        id: release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          tag="release-${{ env.release_version }}"
+          title="${{ env.release_version }}"
+
+          gh release create "$tag" --generate-notes --title "$title"
