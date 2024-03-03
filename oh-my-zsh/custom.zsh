@@ -6,7 +6,7 @@ fi
 case ${OSTYPE} in
   # Mac
   darwin*)
-    source ~/.oh-my-zsh/custom/custom.darwin
+    source ~/git/dotfiles/oh-my-zsh/custom.darwin
     ;;
   linux*)
     source ~/.oh-my-zsh/custom/custom.linux
@@ -187,7 +187,7 @@ zstyle ':completion:*:setopt:*' menu true select
 #-----------------------------------------------------------
 # custom
 #-----------------------------------------------------------
-source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/git/dotfiles/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # change color
 export AUTOSUGGESTION_HIGHLIGHT_COLOR='fg=10'
 
