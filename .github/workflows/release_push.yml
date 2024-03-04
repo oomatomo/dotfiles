@@ -1,0 +1,15 @@
+name: Production release
+
+on:
+  push:
+    tags:
+      - "release-*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup release
+       run: |
+          echo "release done"
