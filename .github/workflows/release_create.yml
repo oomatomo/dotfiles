@@ -1,6 +1,7 @@
 name: Production release create
 
 on:
+  workflow_dispatch:
   create:
     tags:
       - "release-*"
