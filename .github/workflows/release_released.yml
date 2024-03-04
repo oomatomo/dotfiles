@@ -1,4 +1,4 @@
-name: Production release
+name: Production release released
 
 on:
   release:
@@ -10,5 +10,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup release
-       run: |
+        run: |
           echo "release done $GITHUB_REF"
