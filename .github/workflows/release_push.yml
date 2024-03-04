@@ -1,4 +1,4 @@
-name: Production release
+name: Production release push
 
 on:
   push:
@@ -11,5 +11,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup release
-       run: |
+        run: |
           echo "release done"
